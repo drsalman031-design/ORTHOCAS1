@@ -1395,7 +1395,9 @@ export const CaseForm: React.FC<CaseFormProps> = ({ initialPatient, onSavePatien
             patient={buildCurrentPatientRecord()}
             profile={profile}
             onUpdatePatient={(updatedPatient) => onSavePatient(updatedPatient)}
-                  </Suspense>
+          />
+        )}
+        </Suspense>
       </form>
       </div>
 
@@ -1439,8 +1441,8 @@ export const CaseForm: React.FC<CaseFormProps> = ({ initialPatient, onSavePatien
               <CheckCircle2 className="w-4 h-4 shrink-0" />
               <span>Finish Case</span>
             </button>
+          )}
         </div>
-      </div>
       </div>
     </div>
   );
