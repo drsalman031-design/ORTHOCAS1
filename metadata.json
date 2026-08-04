@@ -1,0 +1,6 @@
+{
+  "name": "OrthoSync",
+  "description": "Orthodontic Academic Case Management, Approval, and Department Workflow Platform for HOD, Faculty Guides, and Postgraduate Residents.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
