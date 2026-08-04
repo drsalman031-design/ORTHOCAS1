@@ -121,6 +121,8 @@ body {
   background: var(--bg-primary);
   position: relative;
   overflow: hidden;
+  contain: layout paint;
+  transform: translateZ(0);
   padding-left: var(--safe-left);
   padding-right: var(--safe-right);
 }
@@ -194,6 +196,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  position: relative;
   background: var(--bg-primary);
 }
 

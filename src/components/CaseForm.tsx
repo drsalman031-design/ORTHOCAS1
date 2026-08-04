@@ -911,15 +911,15 @@ export const CaseForm: React.FC<CaseFormProps> = ({ initialPatient, onSavePatien
 
       {/* Left-Side Navigation Drawer */}
       {isDrawerOpen && (
-        <div className="fixed inset-0 z-50 flex">
+        <div className="absolute inset-0 z-50 flex overflow-hidden">
           {/* Smooth Backdrop */}
           <div
-            className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity duration-200 animate-fadeIn cursor-pointer"
+            className="absolute inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity duration-200 animate-fadeIn cursor-pointer"
             onClick={() => setIsDrawerOpen(false)}
           />
 
-          {/* Drawer Container (Width ~80%, max 320px, rounded-r-2xl) */}
-          <div className="relative z-10 w-[80vw] max-w-[320px] h-full bg-white shadow-2xl flex flex-col rounded-r-2xl overflow-hidden animate-slideInLeft border-r border-slate-200">
+          {/* Drawer Container (Width ~85%, max 320px, rounded-r-2xl) */}
+          <div className="relative z-10 w-[85%] max-w-[320px] h-full bg-white shadow-2xl flex flex-col rounded-r-2xl overflow-hidden animate-slideInLeft border-r border-slate-200">
             {/* Drawer Header */}
             <div className="p-4 bg-slate-900 text-white flex items-center justify-between border-b border-slate-800">
               <div className="flex items-center gap-2.5">
