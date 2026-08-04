@@ -1395,55 +1395,52 @@ export const CaseForm: React.FC<CaseFormProps> = ({ initialPatient, onSavePatien
             patient={buildCurrentPatientRecord()}
             profile={profile}
             onUpdatePatient={(updatedPatient) => onSavePatient(updatedPatient)}
-          />
-        )}
+                  </Suspense>
+      </form>
+      </div>
 
-        </Suspense>
+      {/* Pinned Bottom Navigation */}
+      <div className="case-form-footer shrink-0 z-20 bg-white border-t border-slate-200/90 px-3.5 py-2.5 shadow-lg">
+        <div className="flex items-center justify-between gap-3 max-w-2xl mx-auto">
+          <button
+            type="button"
+            onClick={handlePrevTab}
+            disabled={!prevTab}
+            className={`flex items-center justify-center gap-2 min-h-[44px] px-4 rounded-xl text-[14px] font-bold transition-all cursor-pointer ${
+              !prevTab
+                ? 'opacity-40 cursor-not-allowed bg-slate-100 text-slate-400 border border-slate-200'
+                : 'bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 active:scale-98 shadow-2xs'
+            }`}
+          >
+            <ChevronLeft className="w-4 h-4 shrink-0" />
+            <span>Previous</span>
+          </button>
 
-        {/* Bottom Navigation */}
-        <div className="case-form-footer sticky bottom-0 z-20 bg-white/95 backdrop-blur-md border-t border-slate-200/90 p-3 shadow-lg">
-          <div className="flex items-center justify-between gap-3 max-w-2xl mx-auto">
+          {nextTab ? (
             <button
               type="button"
-              onClick={handlePrevTab}
-              disabled={!prevTab}
-              className={`flex items-center justify-center gap-2 min-h-[48px] px-4 rounded-xl text-[14px] font-bold transition-all cursor-pointer ${
-                !prevTab
-                  ? 'opacity-40 cursor-not-allowed bg-slate-100 text-slate-400 border border-slate-200'
-                  : 'bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 active:scale-98 shadow-2xs'
-              }`}
+              onClick={handleNextTab}
+              className="flex items-center justify-center gap-2 min-h-[44px] px-5 rounded-xl bg-teal-600 hover:bg-teal-700 active:bg-teal-800 text-white text-[14px] font-bold shadow-sm transition-all cursor-pointer active:scale-98"
             >
-              <ChevronLeft className="w-4 h-4 shrink-0" />
-              <span>Previous</span>
+              <span>Next</span>
+              <ChevronRight className="w-4 h-4 shrink-0" />
             </button>
-
-            {nextTab ? (
-              <button
-                type="button"
-                onClick={handleNextTab}
-                className="flex items-center justify-center gap-2 min-h-[48px] px-5 rounded-xl bg-teal-600 hover:bg-teal-700 active:bg-teal-800 text-white text-[14px] font-bold shadow-sm transition-all cursor-pointer active:scale-98"
-              >
-                <span>Next</span>
-                <ChevronRight className="w-4 h-4 shrink-0" />
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={() => {
-                  if (name.trim()) {
-                    onSavePatient(buildCurrentPatientRecord());
-                  }
-                  onCancel();
-                }}
-                className="flex items-center justify-center gap-2 min-h-[48px] px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white text-[14px] font-bold shadow-md transition-all cursor-pointer active:scale-98"
-              >
-                <CheckCircle2 className="w-4 h-4 shrink-0" />
-                <span>Finish Case</span>
-              </button>
-            )}
-          </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => {
+                if (name.trim()) {
+                  onSavePatient(buildCurrentPatientRecord());
+                }
+                onCancel();
+              }}
+              className="flex items-center justify-center gap-2 min-h-[44px] px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white text-[14px] font-bold shadow-md transition-all cursor-pointer active:scale-98"
+            >
+              <CheckCircle2 className="w-4 h-4 shrink-0" />
+              <span>Finish Case</span>
+            </button>
         </div>
-      </form>
+      </div>
       </div>
     </div>
   );
