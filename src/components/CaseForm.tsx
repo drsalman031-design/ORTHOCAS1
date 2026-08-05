@@ -869,6 +869,7 @@ export const CaseForm: React.FC<CaseFormProps> = ({ initialPatient, onSavePatien
   const completionPercentage = Math.round((completedCount / TAB_CONFIG.length) * 100);
 
   return (
+    <>
     <div className="case-form-shell relative">
       {/* Sticky Header */}
       <header className="sticky top-0 z-30 bg-white border-b border-slate-200/90 shadow-2xs px-3.5 py-2 flex items-center justify-between gap-2 min-h-[52px] shrink-0">
@@ -1445,6 +1446,6 @@ export const CaseForm: React.FC<CaseFormProps> = ({ initialPatient, onSavePatien
           )}
         </div>
       </div>
-    </div>
+    </>
   );
 };
