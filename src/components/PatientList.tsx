@@ -51,6 +51,27 @@ export const PatientList: React.FC<PatientListProps> = ({
     }
   }, [initialFilter]);
 
+  // Compute filter counts based on approval status
+  const pendingCount = patients.filter((p) => {
+    if (p.archived) return false;
+    const status = p.approvalStatus?.toUpperCase() || '';
+    if (isHOD) return status.includes('PENDING_HOD');
+    return status.includes('PENDING_STAFF') || status.includes('REVISION');
+  }).length;
+
+  const approvedCount = patients.filter((p) => {
+    if (p.archived) return false;
+    const status = p.approvalStatus?.toUpperCase() || '';
+    if (isHOD) return status.includes('APPROVED') || status.includes('HOD_APPROVED');
+    return status.includes('APPROVED') || status.includes('HOD_APPROVED');
+  }).length;
+
+  const correctionsCount = patients.filter((p) => {
+    if (p.archived) return false;
+    const status = p.approvalStatus?.toUpperCase() || '';
+    return status.includes('REVISION') || status.includes('REJECTED');
+  }).length;
+
   // Filter logic
   const filteredPatients = patients
     .filter((p) => {
@@ -61,11 +82,32 @@ export const PatientList: React.FC<PatientListProps> = ({
         if (p.archived) return false;
       }
 
+      const approvalStatus = p.approvalStatus?.toUpperCase() || '';
       const score = p.completionStatus?.overallPercentage || 0;
-      // Approval status mapping for demo
-      if (activeFilter === 'pending' && score >= 80) return false;
-      if (activeFilter === 'approved' && score < 80) return false;
-      if (activeFilter === 'corrections' && score >= 50) return false;
+
+      // Approval status mapping for HOD/Staff views
+      if (activeFilter === 'pending') {
+        if (isHOD) {
+          // HOD sees cases pending their approval
+          if (!approvalStatus.includes('PENDING_HOD')) return false;
+        } else {
+          // Staff/Resident sees cases pending staff approval or revision
+          if (!approvalStatus.includes('PENDING_STAFF') && !approvalStatus.includes('REVISION')) return false;
+        }
+      }
+      if (activeFilter === 'approved') {
+        if (isHOD) {
+          // HOD sees cases they approved
+          if (!approvalStatus.includes('APPROVED') && !approvalStatus.includes('HOD_APPROVED')) return false;
+        } else {
+          // Staff/Resident sees cases approved by staff
+          if (!approvalStatus.includes('APPROVED') && !approvalStatus.includes('HOD_APPROVED') && score < 80) return false;
+        }
+      }
+      if (activeFilter === 'corrections') {
+        // Cases returned for corrections
+        if (!approvalStatus.includes('REVISION') && !approvalStatus.includes('REJECTED') && score >= 50) return false;
+      }
 
       if (!searchQuery.trim()) return true;
       const q = searchQuery.toLowerCase();
@@ -135,7 +177,7 @@ export const PatientList: React.FC<PatientListProps> = ({
               : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
           }`}
         >
-          <span>Pending</span>
+          <span>Pending ({pendingCount})</span>
           <span className="text-xs">⌛</span>
         </button>
 
@@ -148,20 +190,20 @@ export const PatientList: React.FC<PatientListProps> = ({
               : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
           }`}
         >
-          <span>Approved</span>
+          <span>Approved ({approvedCount})</span>
           <span className="text-emerald-600 font-bold text-xs">✓</span>
         </button>
 
         <button
           type="button"
           onClick={() => setActiveFilter('corrections')}
-          className={`px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
+          className={`px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer flex items-center gap-1.5 ${
             activeFilter === 'corrections'
               ? 'bg-rose-600 text-white shadow-xs'
               : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
           }`}
         >
-          Corrections
+          <span>Corrections ({correctionsCount})</span>
         </button>
 
         <button
