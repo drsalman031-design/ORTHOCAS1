@@ -329,15 +329,7 @@ export const StudentDirectory: React.FC<StudentDirectoryProps> = ({ patients }) 
                       </span>
                       <span className="text-xs font-bold text-emerald-900">{s.guide}</span>
                     </div>
-
-                    <button
-                      type="button"
-                      onClick={() => setSelectedDossier(s)}
-                      className="text-[#00317e] hover:underline text-xs font-bold flex items-center gap-1 cursor-pointer transition-opacity"
-                    >
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
+                   </div>
                 </div>
 
                 {/* Metrics Grid */}
