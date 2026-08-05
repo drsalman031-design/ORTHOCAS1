@@ -62,45 +62,12 @@ export const Dashboard: React.FC<DashboardProps> = ({
     (p) => !p.archived && (p.studentOwnerId === currentUser.id || !p.studentOwnerId)
   );
 
-  // State for faculty/HOD approvals queue
-  const [approvalList, setApprovalList] = useState([
-    {
-      id: 'app-1',
-      patientName: 'Chen, Wei-Long',
-      caseId: 'ORD-2024-0892',
-      residentName: 'Dr. Rahul Sharma (Y2)',
-      guideName: 'Dr. Sunita Patil',
-      submissionDate: 'Today, 09:30 AM',
-      type: 'Initial Treatment Plan & Ceph Analysis',
-      priority: 'Urgent Review',
-      priorityColor: 'bg-red-50 text-red-700 border-red-200',
-      status: 'PENDING_HOD',
-    },
-    {
-      id: 'app-2',
-      patientName: 'Priya Mukherjee',
-      caseId: 'OC-8821',
-      residentName: 'Dr. Ananya Sen (Y1)',
-      guideName: 'Dr. Sunita Patil',
-      submissionDate: 'Yesterday, 04:15 PM',
-      type: 'Fixed Appliance Bonding & Wire Sequence',
-      priority: 'Guide Approved',
-      priorityColor: 'bg-blue-50 text-[#0D52D6] border-blue-200',
-      status: 'PENDING_HOD',
-    },
-    {
-      id: 'app-3',
-      patientName: 'Karan Malhotra',
-      caseId: 'ORD-2024-0412',
-      residentName: 'Dr. Vikramaditya (Y3)',
-      guideName: 'Dr. Rajesh K. V.',
-      submissionDate: '2 days ago',
-      type: 'Final Debonding & Hawley Retainer Protocol',
-      priority: 'High Priority',
-      priorityColor: 'bg-amber-50 text-amber-800 border-amber-200',
-      status: 'PENDING_HOD',
-    },
-  ]);
+  // Real pending approvals from patient data (HOD sees PENDING_HOD)
+  const hodPendingCases = patients.filter((p) => {
+    if (p.archived) return false;
+    const status = p.approvalStatus?.toUpperCase() || '';
+    return status.includes('PENDING_HOD');
+  });
 
   const [activityFeed] = useState([
     {
@@ -130,17 +97,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
   ]);
 
   const [showRequirementsModal, setShowRequirementsModal] = useState(false);
-
-  const handleApprove = (id: string) => {
-    setApprovalList((prev) => prev.filter((item) => item.id !== id));
-  };
-
-  const handleReject = (id: string) => {
-    const reason = prompt('Enter reason for requesting revision / correction:');
-    if (reason !== null) {
-      setApprovalList((prev) => prev.filter((item) => item.id !== id));
-    }
-  };
 
   // RESIDENT SPECIFIC DASHBOARD VIEW
   if (isResident) {
@@ -506,7 +462,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             </div>
           </div>
           <div className="mt-3 flex items-baseline gap-1.5">
-            <span className="text-[30px] font-bold leading-none text-amber-900">{approvalList.length}</span>
+            <span className="text-[30px] font-bold leading-none text-amber-900">{hodPendingCases.length}</span>
             <span className="text-[10px] font-bold text-amber-700 bg-amber-100 px-1.5 py-0.5 rounded">
               Action Required
             </span>
@@ -531,7 +487,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
           </div>
           <div className="flex flex-col items-center justify-center bg-blue-50 border border-blue-200/80 rounded-xl px-3.5 py-2 min-w-[72px] shrink-0">
             <span className="text-[#00317e] font-extrabold text-2xl leading-none">
-              {approvalList.length}
+              {hodPendingCases.length}
             </span>
             <span className="text-[10px] font-bold text-blue-800 uppercase tracking-wider mt-0.5">
               Items
@@ -539,7 +495,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
           </div>
         </div>
 
-        {approvalList.length === 0 ? (
+        {hodPendingCases.length === 0 ? (
           <div className="text-center py-8 bg-slate-50 rounded-xl border border-dashed border-slate-200 space-y-2">
             <CheckCircle2 className="w-8 h-8 text-emerald-500 mx-auto" />
             <p className="text-xs font-bold text-slate-800">All Approvals Cleared!</p>
@@ -549,13 +505,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
           </div>
         ) : (
           <div className="space-y-3">
-            {approvalList.map((item) => {
-              const isUrgent = item.priority.toLowerCase().includes('urgent');
-              const isHigh = item.priority.toLowerCase().includes('high');
+            {hodPendingCases.map((patient) => {
+              const isUrgent = patient.completionStatus?.overallPercentage === 0; // placeholder
+              const isHigh = patient.completionStatus?.overallPercentage && patient.completionStatus.overallPercentage < 50; // placeholder
 
               return (
                 <div
-                  key={item.id}
+                  key={patient.id}
                   className={`bg-white border border-slate-200/80 rounded-xl overflow-hidden shadow-2xs hover:shadow-md transition-shadow ${
                     isUrgent
                       ? 'border-l-4 border-l-rose-600'
@@ -569,14 +525,14 @@ export const Dashboard: React.FC<DashboardProps> = ({
                     <div className="flex justify-between items-start gap-2">
                       <div className="flex flex-col min-w-0">
                         <h3 className="text-base font-bold text-slate-900 truncate">
-                          {item.patientName}
+                          {patient.name}
                         </h3>
                         <span className="bg-slate-100 text-slate-600 font-mono font-bold text-[11px] px-2 py-0.5 rounded mt-1 inline-block w-fit uppercase tracking-wider border border-slate-200/60">
-                          {item.caseId}
+                          {patient.patientId}
                         </span>
                       </div>
                       <span className="text-slate-400 font-medium text-xs shrink-0">
-                        {item.submissionDate}
+                        {new Date(patient.updatedAt).toLocaleDateString()}
                       </span>
                     </div>
 
@@ -591,10 +547,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
                             : 'bg-blue-50 text-[#00317e] border-blue-200'
                         }`}
                       >
-                        {item.priority}
+                        Pending HOD Review
                       </span>
                       <h4 className="text-[#00317e] font-bold text-sm leading-snug">
-                        {item.type}
+                        {patient.diagnosisAndPlan?.provisionalDiagnosis || 'Treatment Plan Review'}
                       </h4>
                     </div>
 
@@ -608,7 +564,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                           Resident
                         </span>
                         <span className="text-xs text-slate-900 font-bold truncate">
-                          {item.residentName}
+                          {patient.studentOwnerId || 'Unassigned'}
                         </span>
                       </div>
                     </div>
@@ -624,7 +580,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                       </button>
                       <button
                         type="button"
-                        onClick={() => handleReject(item.id)}
+                        onClick={() => { /* handleReject logic */ }}
                         className="flex-1 border border-rose-200 text-rose-700 hover:bg-rose-50 font-bold py-2.5 rounded-lg flex items-center justify-center gap-1.5 transition-all active:scale-[0.98] text-xs cursor-pointer"
                       >
                         <XCircle className="w-4 h-4" />
@@ -632,7 +588,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                       </button>
                       <button
                         type="button"
-                        onClick={() => handleApprove(item.id)}
+                        onClick={() => { /* handleApprove logic */ }}
                         className="flex-1 bg-[#00317e] text-white hover:bg-blue-900 font-bold py-2.5 rounded-lg flex items-center justify-center gap-1.5 shadow-2xs transition-all active:scale-[0.98] text-xs cursor-pointer"
                       >
                         <CheckCircle2 className="w-4 h-4" />
