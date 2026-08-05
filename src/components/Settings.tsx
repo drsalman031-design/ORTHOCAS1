@@ -70,7 +70,11 @@ export const Settings: React.FC<SettingsProps> = ({
   const canManageStudentsAndCases = isHOD || isFaculty;
 
   // Profile Form state
-  const [studentName, setStudentName] = useState(profile.studentName || currentUser.name || '');
+  const [studentName, setStudentName] = useState(
+    (currentUser.role === 'STAFF_GUIDE' || currentUser.role === 'HOD')
+      ? currentUser.name
+      : profile.studentName || currentUser.name || ''
+  );
   const [rollNumber, setRollNumber] = useState(profile.rollNumber || 'ORTHO-HOD-01');
   const [institution, setInstitution] = useState(profile.institution || 'Government Dental College');
   const [department, setDepartment] = useState(profile.department || 'Department of Orthodontics');
