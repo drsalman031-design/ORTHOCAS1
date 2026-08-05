@@ -357,14 +357,6 @@ export const StudentDirectory: React.FC<StudentDirectoryProps> = ({ patients }) 
                       {s.approvedCases}
                     </span>
                   </div>
-                  <div className="bg-white p-2.5 rounded-lg border border-slate-200/60 flex flex-col items-center text-center">
-                    <span className="text-slate-400 font-bold text-[10px] uppercase tracking-wider mb-0.5">
-                      Ceph Acc.
-                    </span>
-                    <span className="text-sm font-extrabold text-[#00317e]">
-                      {s.cephAccuracy}
-                    </span>
-                  </div>
                   </div>
               </article>
             );
