@@ -869,7 +869,6 @@ export const CaseForm: React.FC<CaseFormProps> = ({ initialPatient, onSavePatien
   const completionPercentage = Math.round((completedCount / TAB_CONFIG.length) * 100);
 
   return (
-    <>
     <div className="case-form-shell relative">
       {/* Sticky Header */}
       <header className="sticky top-0 z-30 bg-white border-b border-slate-200/90 shadow-2xs px-3.5 py-2 flex items-center justify-between gap-2 min-h-[52px] shrink-0">
@@ -1403,7 +1402,7 @@ export const CaseForm: React.FC<CaseFormProps> = ({ initialPatient, onSavePatien
       </div>
     </div>
 
-      {/* Pinned Bottom Navigation - outside case-form-shell to avoid overflow:hidden clipping fixed position */}
+      {/* Pinned Bottom Navigation */}
       <div className="case-form-footer shrink-0 z-20 bg-white border-t border-slate-200/90 px-3.5 py-2.5 shadow-lg">
         <div className="flex items-center justify-between gap-3 max-w-2xl mx-auto">
           <button
@@ -1446,6 +1445,6 @@ export const CaseForm: React.FC<CaseFormProps> = ({ initialPatient, onSavePatien
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
