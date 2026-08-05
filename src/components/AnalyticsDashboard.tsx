@@ -84,33 +84,33 @@ export const AnalyticsDashboard: React.FC = () => {
       </div>
 
       {/* ANALYTICS HERO CARD */}
-      <section className="relative overflow-hidden bg-[#00317e] text-white rounded-2xl p-6 shadow-sm">
-        <div className="absolute -right-8 -top-8 w-32 h-32 bg-blue-500/20 rounded-full blur-2xl pointer-events-none" />
-        <div className="relative z-10 flex flex-col sm:flex-row sm:items-start justify-between gap-4">
-          <div className="space-y-1 max-w-md">
-            <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight text-white leading-tight">
+      <section className="relative overflow-hidden bg-[#00317e] text-white rounded-2xl p-4 shadow-sm">
+        <div className="absolute -right-6 -top-6 w-24 h-24 bg-blue-500/20 rounded-full blur-2xl pointer-events-none" />
+        <div className="relative z-10 flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+          <div className="space-y-0.5 max-w-md">
+            <h2 className="text-lg sm:text-xl font-extrabold tracking-tight text-white leading-tight">
               Academic & Clinical
               <br />
               Analytics
             </h2>
-            <p className="text-xs sm:text-sm text-blue-100/90 font-medium leading-relaxed">
+            <p className="text-[10px] sm:text-xs text-blue-100/90 font-medium leading-relaxed">
               Department Case Distribution & Approval Trends
             </p>
           </div>
 
-          <div className="flex flex-col items-end gap-3">
-            <div className="bg-white/10 p-3 rounded-xl border border-white/20 backdrop-blur-sm shrink-0">
-              <TrendingUp className="w-6 h-6 text-white" />
+          <div className="flex flex-col items-end gap-2">
+            <div className="bg-white/10 p-2 rounded-lg border border-white/20 backdrop-blur-sm shrink-0">
+              <TrendingUp className="w-5 h-5 text-white" />
             </div>
 
             {/* TIMEFRAME TOGGLE BUTTONS */}
-            <div className="inline-flex p-1 bg-white/15 rounded-xl border border-white/20 backdrop-blur-xs">
+            <div className="inline-flex p-1 bg-white/15 rounded-lg border border-white/20 backdrop-blur-xs">
               {(['MONTHLY', 'QUARTERLY', 'YEARLY'] as const).map((tf) => (
                 <button
                   key={tf}
                   type="button"
                   onClick={() => setTimeframe(tf)}
-                  className={`px-3 py-1 rounded-lg text-[11px] font-bold tracking-wider uppercase transition-all cursor-pointer ${
+                  className={`px-2.5 py-0.5 rounded-lg text-[10px] font-bold tracking-wider uppercase transition-all cursor-pointer ${
                     timeframe === tf
                       ? 'bg-white text-[#00317e] shadow-2xs'
                       : 'text-blue-100 hover:text-white'
