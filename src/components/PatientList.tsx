@@ -41,6 +41,8 @@ export const PatientList: React.FC<PatientListProps> = ({
 }) => {
   const currentUser = getCurrentUserAccount();
   const isHOD = currentUser.role === 'HOD';
+  const isStaff = currentUser.role === 'STAFF_GUIDE';
+  const currentUserId = currentUser.id;
 
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState<FilterTab>(initialFilter);
@@ -51,29 +53,37 @@ export const PatientList: React.FC<PatientListProps> = ({
     }
   }, [initialFilter]);
 
-  // Compute filter counts based on approval status
-  const pendingCount = patients.filter((p) => {
+  // First filter by role: HOD sees all, Staff sees only their allocated, Resident sees their own
+  const roleFilteredPatients = patients.filter((p) => {
+    if (isHOD) return true;
+    if (isStaff) return p.assignedStaffId === currentUserId;
+    // Resident/Student
+    return p.studentOwnerId === currentUserId || !p.studentOwnerId;
+  });
+
+  // Compute filter counts based on approval status (on role-filtered patients)
+  const pendingCount = roleFilteredPatients.filter((p) => {
     if (p.archived) return false;
     const status = p.approvalStatus?.toUpperCase() || '';
     if (isHOD) return status.includes('PENDING_HOD');
     return status.includes('PENDING_STAFF') || status.includes('REVISION');
   }).length;
 
-  const approvedCount = patients.filter((p) => {
+  const approvedCount = roleFilteredPatients.filter((p) => {
     if (p.archived) return false;
     const status = p.approvalStatus?.toUpperCase() || '';
     if (isHOD) return status.includes('APPROVED') || status.includes('HOD_APPROVED');
     return status.includes('APPROVED') || status.includes('HOD_APPROVED');
   }).length;
 
-  const correctionsCount = patients.filter((p) => {
+  const correctionsCount = roleFilteredPatients.filter((p) => {
     if (p.archived) return false;
     const status = p.approvalStatus?.toUpperCase() || '';
     return status.includes('REVISION') || status.includes('REJECTED');
   }).length;
 
   // Filter logic
-  const filteredPatients = patients
+  const filteredPatients = roleFilteredPatients
     .filter((p) => {
       // Archive filter
       if (activeFilter === 'archived') {
