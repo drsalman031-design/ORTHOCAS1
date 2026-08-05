@@ -357,6 +357,14 @@ export const StudentDirectory: React.FC<StudentDirectoryProps> = ({ patients }) 
                       {s.approvedCases}
                     </span>
                   </div>
+                  <div className="bg-white p-2.5 rounded-lg border border-slate-200/60 flex flex-col items-center text-center">
+                    <span className="text-slate-400 font-bold text-[10px] uppercase tracking-wider mb-0.5">
+                      Pending
+                    </span>
+                    <span className="text-sm font-extrabold text-amber-600">
+                      {s.pendingApprovals}
+                    </span>
+                  </div>
                   </div>
               </article>
             );
