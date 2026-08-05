@@ -211,5 +211,15 @@ export const SAMPLE_PATIENTS: PatientRecord[] = [
       modelAnalysis: true,
       overallPercentage: 100,
     },
+    // Approval Workflow Fields
+    studentOwnerId: 'usr-student-1',
+    assignedStaffId: 'usr-staff-1',
+    assignedStaffName: 'Dr. Sunita Patil',
+    assignedHodId: 'usr-hod-1',
+    approvalStatus: 'PENDING_HOD',
+    studentSubmissionDate: '2026-07-28T14:20:00.000Z',
+    staffReviewerName: 'Dr. Sunita Patil',
+    staffComments: 'Cephalometric values and treatment plan look appropriate. Forwarding to HOD for final approval.',
+    staffApprovalDate: '2026-07-27T10:30:00.000Z',
   },
 ];
