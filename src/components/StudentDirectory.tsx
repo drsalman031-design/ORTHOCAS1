@@ -335,7 +335,6 @@ export const StudentDirectory: React.FC<StudentDirectoryProps> = ({ patients }) 
                       onClick={() => setSelectedDossier(s)}
                       className="text-[#00317e] hover:underline text-xs font-bold flex items-center gap-1 cursor-pointer transition-opacity"
                     >
-                      <span>View Full Dossier</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </button>
                   </div>
