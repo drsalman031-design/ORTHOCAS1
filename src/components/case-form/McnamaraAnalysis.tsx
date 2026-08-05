@@ -20,6 +20,7 @@ import {
   ChevronUp,
   Sliders,
 } from 'lucide-react';
+import { StepperInput } from './StepperInput';
 
 export interface McnamaraParameterMeta {
   key: McnamaraParameterKey;
@@ -602,14 +603,14 @@ export const McnamaraAnalysis: React.FC<McnamaraAnalysisProps> = ({
                   </span>
                 </p>
               </div>
-              <input
-                type="number"
-                step="0.1"
+              <StepperInput
                 value={currentVal}
-                onChange={(e) => handleInputChange(meta.key, currentStage, e.target.value)}
-                placeholder="Val"
-                aria-label={`${meta.label} ${stageDisplayLabel}`}
-                className={`w-20 shrink-0 text-center py-1.5 px-1.5 border rounded-lg text-xs font-semibold ${validation.className}`}
+                onChange={(v) => handleInputChange(meta.key, currentStage, v === '' ? '' : String(v))}
+                min={meta.getNormalRange(sizeFrame).minNormal - 10}
+                max={meta.getNormalRange(sizeFrame).maxNormal + 10}
+                step={0.1}
+                unit={meta.unit}
+                validationClass={validation.className}
               />
             </div>
             <div className="whitespace-normal break-words">{renderInference(activeInference)}</div>
@@ -775,13 +776,14 @@ export const McnamaraAnalysis: React.FC<McnamaraAnalysisProps> = ({
                           {meta.normalText(sizeFrame)}
                         </td>
                         <td className="py-2 px-2 text-center">
-                          <input
-                            type="number"
-                            step="0.1"
+                          <StepperInput
                             value={currentVal}
-                            onChange={(e) => handleInputChange(meta.key, currentStage, e.target.value)}
-                            placeholder="Val"
-                            className={`w-full text-center py-1 px-2 border rounded-lg text-xs sm:text-sm transition-colors font-semibold ${validation.className}`}
+                            onChange={(v) => handleInputChange(meta.key, currentStage, v === '' ? '' : String(v))}
+                            min={meta.getNormalRange(sizeFrame).minNormal - 10}
+                            max={meta.getNormalRange(sizeFrame).maxNormal + 10}
+                            step={0.1}
+                            unit={meta.unit}
+                            validationClass={validation.className}
                           />
                         </td>
                         <td className="py-2.5 px-3">
@@ -826,13 +828,14 @@ export const McnamaraAnalysis: React.FC<McnamaraAnalysisProps> = ({
                           {meta.normalText(sizeFrame)}
                         </td>
                         <td className="py-2 px-2 text-center">
-                          <input
-                            type="number"
-                            step="0.1"
+                          <StepperInput
                             value={currentVal}
-                            onChange={(e) => handleInputChange(meta.key, currentStage, e.target.value)}
-                            placeholder="Val"
-                            className={`w-full text-center py-1 px-2 border rounded-lg text-xs sm:text-sm transition-colors font-semibold ${validation.className}`}
+                            onChange={(v) => handleInputChange(meta.key, currentStage, v === '' ? '' : String(v))}
+                            min={meta.getNormalRange(sizeFrame).minNormal - 10}
+                            max={meta.getNormalRange(sizeFrame).maxNormal + 10}
+                            step={0.1}
+                            unit={meta.unit}
+                            validationClass={validation.className}
                           />
                         </td>
                         <td className="py-2.5 px-3">
@@ -877,13 +880,14 @@ export const McnamaraAnalysis: React.FC<McnamaraAnalysisProps> = ({
                           {meta.normalText(sizeFrame)}
                         </td>
                         <td className="py-2 px-2 text-center">
-                          <input
-                            type="number"
-                            step="0.1"
+                          <StepperInput
                             value={currentVal}
-                            onChange={(e) => handleInputChange(meta.key, currentStage, e.target.value)}
-                            placeholder="Val"
-                            className={`w-full text-center py-1 px-2 border rounded-lg text-xs sm:text-sm transition-colors font-semibold ${validation.className}`}
+                            onChange={(v) => handleInputChange(meta.key, currentStage, v === '' ? '' : String(v))}
+                            min={meta.getNormalRange(sizeFrame).minNormal - 10}
+                            max={meta.getNormalRange(sizeFrame).maxNormal + 10}
+                            step={0.1}
+                            unit={meta.unit}
+                            validationClass={validation.className}
                           />
                         </td>
                         <td className="py-2.5 px-3">
@@ -905,107 +909,109 @@ export const McnamaraAnalysis: React.FC<McnamaraAnalysisProps> = ({
                     );
                   })}
 
-                  {/* Category 4: Dentition */}
-                  <tr className="bg-slate-100 font-bold text-slate-800 text-[11px] tracking-wider uppercase">
-                    <td colSpan={4} className="py-1.5 px-3 bg-slate-100 text-slate-900 font-extrabold border-t border-b border-slate-300">
-                      4. Dentition
-                    </td>
-                  </tr>
-                  {MCNAMARA_PARAMETERS_META.filter((m) => m.category === 'Dentition').map((meta) => {
-                    const currentVal = params[meta.key]?.[currentStage] ?? '';
-                    const validation = getFieldValidation(currentVal, meta);
-                    const activeInference = inferences[meta.key];
+{/* Category 4: Dentition */}
+                   <tr className="bg-slate-100 font-bold text-slate-800 text-[11px] tracking-wider uppercase">
+                     <td colSpan={4} className="py-1.5 px-3 bg-slate-100 text-slate-900 font-extrabold border-t border-b border-slate-300">
+                       4. Dentition
+                     </td>
+                   </tr>
+                   {MCNAMARA_PARAMETERS_META.filter((m) => m.category === 'Dentition').map((meta) => {
+                     const currentVal = params[meta.key]?.[currentStage] ?? '';
+                     const validation = getFieldValidation(currentVal, meta);
+                     const activeInference = inferences[meta.key];
 
-                    return (
-                      <tr key={meta.key} className="hover:bg-slate-50 transition-colors">
-                        <td className="py-2.5 px-3 font-bold text-slate-900">
-                          {meta.label}
-                          <span className="ml-1.5 text-[10px] font-medium text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded">
-                            {meta.unit}
-                          </span>
-                        </td>
-                        <td className="py-2.5 px-2 text-center font-bold text-slate-700 bg-slate-50/80 text-xs">
-                          {meta.normalText(sizeFrame)}
-                        </td>
-                        <td className="py-2 px-2 text-center">
-                          <input
-                            type="number"
-                            step="0.1"
-                            value={currentVal}
-                            onChange={(e) => handleInputChange(meta.key, currentStage, e.target.value)}
-                            placeholder="Val"
-                            className={`w-full text-center py-1 px-2 border rounded-lg text-xs sm:text-sm transition-colors font-semibold ${validation.className}`}
-                          />
-                        </td>
-                        <td className="py-2.5 px-3">
-                          {activeInference.status === 'empty' ? (
-                            <span className="text-slate-400 text-xs italic">Enter value</span>
-                          ) : activeInference.status === 'normal' ? (
-                            <span className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-bold text-emerald-900 bg-emerald-100 border border-emerald-300 px-2.5 py-0.5 rounded-full">
-                              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                              {activeInference.inference}
-                            </span>
-                          ) : (
-                            <span className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-bold text-rose-900 bg-rose-100 border border-rose-300 px-2.5 py-0.5 rounded-full">
-                              <XCircle className="w-3.5 h-3.5 text-rose-600 shrink-0" />
-                              {activeInference.inference}
-                            </span>
-                          )}
-                        </td>
-                      </tr>
-                    );
-                  })}
+                     return (
+                       <tr key={meta.key} className="hover:bg-slate-50 transition-colors">
+                         <td className="py-2.5 px-3 font-bold text-slate-900">
+                           {meta.label}
+                           <span className="ml-1.5 text-[10px] font-medium text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded">
+                             {meta.unit}
+                           </span>
+                         </td>
+                         <td className="py-2.5 px-2 text-center font-bold text-slate-700 bg-slate-50/80 text-xs">
+                           {meta.normalText(sizeFrame)}
+                         </td>
+                         <td className="py-2 px-2 text-center">
+                           <StepperInput
+                             value={currentVal}
+                             onChange={(v) => handleInputChange(meta.key, currentStage, v === '' ? '' : String(v))}
+                             min={meta.getNormalRange(sizeFrame).minNormal - 10}
+                             max={meta.getNormalRange(sizeFrame).maxNormal + 10}
+                             step={0.1}
+                             unit={meta.unit}
+                             validationClass={validation.className}
+                           />
+                         </td>
+                         <td className="py-2.5 px-3">
+                           {activeInference.status === 'empty' ? (
+                             <span className="text-slate-400 text-xs italic">Enter value</span>
+                           ) : activeInference.status === 'normal' ? (
+                             <span className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-bold text-emerald-900 bg-emerald-100 border border-emerald-300 px-2.5 py-0.5 rounded-full">
+                               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                               {activeInference.inference}
+                             </span>
+                           ) : (
+                             <span className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-bold text-rose-900 bg-rose-100 border border-rose-300 px-2.5 py-0.5 rounded-full">
+                               <XCircle className="w-3.5 h-3.5 text-rose-600 shrink-0" />
+                               {activeInference.inference}
+                             </span>
+                           )}
+                         </td>
+                       </tr>
+                     );
+                   })}
 
-                  {/* Category 5: Airway */}
-                  <tr className="bg-slate-100 font-bold text-slate-800 text-[11px] tracking-wider uppercase">
-                    <td colSpan={4} className="py-1.5 px-3 bg-slate-100 text-slate-900 font-extrabold border-t border-b border-slate-300">
-                      5. Airway Dimensions
-                    </td>
-                  </tr>
-                  {MCNAMARA_PARAMETERS_META.filter((m) => m.category === 'Airway').map((meta) => {
-                    const currentVal = params[meta.key]?.[currentStage] ?? '';
-                    const validation = getFieldValidation(currentVal, meta);
-                    const activeInference = inferences[meta.key];
+{/* Category 5: Airway */}
+                   <tr className="bg-slate-100 font-bold text-slate-800 text-[11px] tracking-wider uppercase">
+                     <td colSpan={4} className="py-1.5 px-3 bg-slate-100 text-slate-900 font-extrabold border-t border-b border-slate-300">
+                       5. Airway Dimensions
+                     </td>
+                   </tr>
+                   {MCNAMARA_PARAMETERS_META.filter((m) => m.category === 'Airway').map((meta) => {
+                     const currentVal = params[meta.key]?.[currentStage] ?? '';
+                     const validation = getFieldValidation(currentVal, meta);
+                     const activeInference = inferences[meta.key];
 
-                    return (
-                      <tr key={meta.key} className="hover:bg-slate-50 transition-colors">
-                        <td className="py-2.5 px-3 font-bold text-slate-900">
-                          {meta.label}
-                          <span className="ml-1.5 text-[10px] font-medium text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded">
-                            {meta.unit}
-                          </span>
-                        </td>
-                        <td className="py-2.5 px-2 text-center font-bold text-slate-700 bg-slate-50/80 text-xs">
-                          {meta.normalText(sizeFrame)}
-                        </td>
-                        <td className="py-2 px-2 text-center">
-                          <input
-                            type="number"
-                            step="0.1"
-                            value={currentVal}
-                            onChange={(e) => handleInputChange(meta.key, currentStage, e.target.value)}
-                            placeholder="Val"
-                            className={`w-full text-center py-1 px-2 border rounded-lg text-xs sm:text-sm transition-colors font-semibold ${validation.className}`}
-                          />
-                        </td>
-                        <td className="py-2.5 px-3">
-                          {activeInference.status === 'empty' ? (
-                            <span className="text-slate-400 text-xs italic">Enter value</span>
-                          ) : activeInference.status === 'normal' ? (
-                            <span className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-bold text-emerald-900 bg-emerald-100 border border-emerald-300 px-2.5 py-0.5 rounded-full">
-                              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                              {activeInference.inference}
-                            </span>
-                          ) : (
-                            <span className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-bold text-rose-900 bg-rose-100 border border-rose-300 px-2.5 py-0.5 rounded-full">
-                              <XCircle className="w-3.5 h-3.5 text-rose-600 shrink-0" />
-                              {activeInference.inference}
-                            </span>
-                          )}
-                        </td>
-                      </tr>
-                    );
-                  })}
+                     return (
+                       <tr key={meta.key} className="hover:bg-slate-50 transition-colors">
+                         <td className="py-2.5 px-3 font-bold text-slate-900">
+                           {meta.label}
+                           <span className="ml-1.5 text-[10px] font-medium text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded">
+                             {meta.unit}
+                           </span>
+                         </td>
+                         <td className="py-2.5 px-2 text-center font-bold text-slate-700 bg-slate-50/80 text-xs">
+                           {meta.normalText(sizeFrame)}
+                         </td>
+                         <td className="py-2 px-2 text-center">
+                           <StepperInput
+                             value={currentVal}
+                             onChange={(v) => handleInputChange(meta.key, currentStage, v === '' ? '' : String(v))}
+                             min={meta.getNormalRange(sizeFrame).minNormal - 10}
+                             max={meta.getNormalRange(sizeFrame).maxNormal + 10}
+                             step={0.1}
+                             unit={meta.unit}
+                             validationClass={validation.className}
+                           />
+                         </td>
+                         <td className="py-2.5 px-3">
+                           {activeInference.status === 'empty' ? (
+                             <span className="text-slate-400 text-xs italic">Enter value</span>
+                           ) : activeInference.status === 'normal' ? (
+                             <span className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-bold text-emerald-900 bg-emerald-100 border border-emerald-300 px-2.5 py-0.5 rounded-full">
+                               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                               {activeInference.inference}
+                             </span>
+                           ) : (
+                             <span className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-bold text-rose-900 bg-rose-100 border border-rose-300 px-2.5 py-0.5 rounded-full">
+                               <XCircle className="w-3.5 h-3.5 text-rose-600 shrink-0" />
+                               {activeInference.inference}
+                             </span>
+                           )}
+                         </td>
+                       </tr>
+                     );
+                   })}
                 </tbody>
               </table>
             </div>

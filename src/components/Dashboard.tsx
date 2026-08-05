@@ -191,30 +191,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
             </div>
           </button>
 
-          {/* Card 2: Requirements Met */}
-          <button
-            type="button"
-            onClick={() => setShowRequirementsModal(true)}
-            className="rounded-2xl bg-white p-3.5 border border-slate-100 shadow-2xs hover:shadow-md hover:border-emerald-300 active:scale-95 transition-all flex flex-col justify-between text-left min-w-0 h-full cursor-pointer group"
-          >
-            <div className="space-y-1 min-w-0 w-full">
-              <div className="flex items-center justify-between gap-1 w-full">
-                <span className="text-[13px] font-semibold text-slate-700 truncate min-w-0">
-                  Requirements Met
-                </span>
-                <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-emerald-600 transition-colors shrink-0" />
-              </div>
-              <div className="text-[30px] font-bold leading-none text-slate-900 pt-1">
-                12/20
-              </div>
-            </div>
-            <div className="pt-3 min-w-0">
-              <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-600 w-max max-w-full truncate block border border-emerald-100/80">
-                60% Completed
-              </span>
-            </div>
-          </button>
-
           {/* Card 3: Awaiting Review */}
           <button
             type="button"
@@ -441,7 +417,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
   // FACULTY & HOD SUPERVISORY DASHBOARD VIEW
   return (
-    <div className="space-y-5 pb-6 font-sans bg-[#F8FAFC]">
+    <div className="w-full max-w-md mx-auto space-y-5 pb-6 font-sans bg-[#F8FAFC]">
       {/* HOD HERO WELCOME CARD */}
       <div className="bg-gradient-to-r from-slate-900 to-blue-950 text-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-800 relative overflow-hidden min-w-0">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 relative z-10 min-w-0">

@@ -20,6 +20,7 @@ import {
   ChevronUp,
   Zap,
 } from 'lucide-react';
+import { StepperInput } from './StepperInput';
 
 export interface HoldawayParameterMeta {
   key: HoldawayParameterKey;
@@ -465,14 +466,14 @@ export const HoldawayAnalysis: React.FC<HoldawayAnalysisProps> = ({
                   </span>
                 </p>
               </div>
-              <input
-                type="number"
-                step="0.1"
+              <StepperInput
                 value={currentVal}
-                onChange={(e) => handleInputChange(meta.key, currentStage, e.target.value)}
-                placeholder="Val"
-                aria-label={`${meta.label} ${stageDisplayLabel}`}
-                className={`w-20 shrink-0 text-center py-1.5 px-1.5 border rounded-lg text-xs font-semibold ${validation.className}`}
+                onChange={(v) => handleInputChange(meta.key, currentStage, v === '' ? '' : String(v))}
+                min={meta.getNormalRange(activeAnbVal).minNormal - 10}
+                max={meta.getNormalRange(activeAnbVal).maxNormal + 10}
+                step={0.1}
+                unit={meta.unit}
+                validationClass={validation.className}
               />
             </div>
             <div className="whitespace-normal break-words">{renderInference(activeInference)}</div>
@@ -634,13 +635,14 @@ export const HoldawayAnalysis: React.FC<HoldawayAnalysisProps> = ({
                           {meta.normalText(activeAnbVal)}
                         </td>
                         <td className="py-2 px-2 text-center">
-                          <input
-                            type="number"
-                            step="0.1"
+                          <StepperInput
                             value={currentVal}
-                            onChange={(e) => handleInputChange(meta.key, currentStage, e.target.value)}
-                            placeholder="Val"
-                            className={`w-full text-center py-1 px-2 border rounded-lg text-xs sm:text-sm transition-colors font-semibold ${validation.className}`}
+                            onChange={(v) => handleInputChange(meta.key, currentStage, v === '' ? '' : String(v))}
+                            min={meta.getNormalRange(activeAnbVal).minNormal - 10}
+                            max={meta.getNormalRange(activeAnbVal).maxNormal + 10}
+                            step={0.1}
+                            unit={meta.unit}
+                            validationClass={validation.className}
                           />
                         </td>
                         <td className="py-2.5 px-3">

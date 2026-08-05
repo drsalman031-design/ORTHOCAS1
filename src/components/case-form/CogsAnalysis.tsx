@@ -23,6 +23,7 @@ import {
   Layers,
   Zap,
 } from 'lucide-react';
+import { StepperInput } from './StepperInput';
 
 // --- Hard Tissue Parameter Metadata ---
 export interface CogsParameterMeta {
@@ -910,13 +911,14 @@ export const CogsAnalysis: React.FC<CogsAnalysisProps> = ({
                   </span>
                 </p>
               </div>
-              <input
-                type="number"
-                step="any"
+              <StepperInput
                 value={inputVal}
-                onChange={(e) => handleHardValueChange(meta.key, currentStage, e.target.value)}
-                placeholder="--"
-                className={`w-20 shrink-0 text-center py-1.5 px-1.5 border rounded-lg text-xs font-bold font-mono ${getHardInputClass(meta.key, currentStage)}`}
+                onChange={(v) => handleHardValueChange(meta.key, currentStage, v === '' ? '' : String(v))}
+                min={meta.getNormalRange(selectedGender).minNormal - 10}
+                max={meta.getNormalRange(selectedGender).maxNormal + 10}
+                step={0.1}
+                unit={meta.unit}
+                validationClass={getHardInputClass(meta.key, currentStage)}
               />
             </div>
             <div className="whitespace-normal break-words">
@@ -961,13 +963,14 @@ export const CogsAnalysis: React.FC<CogsAnalysisProps> = ({
                   </span>
                 </p>
               </div>
-              <input
-                type="number"
-                step="any"
+              <StepperInput
                 value={inputVal}
-                onChange={(e) => handleSoftValueChange(meta.key, currentStage, e.target.value)}
-                placeholder="--"
-                className={`w-20 shrink-0 text-center py-1.5 px-1.5 border rounded-lg text-xs font-bold font-mono ${getSoftInputClass(meta.key, currentStage)}`}
+                onChange={(v) => handleSoftValueChange(meta.key, currentStage, v === '' ? '' : String(v))}
+                min={meta.getNormalRange().minNormal - 10}
+                max={meta.getNormalRange().maxNormal + 10}
+                step={0.1}
+                unit={meta.unit}
+                validationClass={getSoftInputClass(meta.key, currentStage)}
               />
             </div>
             <div className="whitespace-normal break-words">
@@ -1169,18 +1172,14 @@ export const CogsAnalysis: React.FC<CogsAnalysisProps> = ({
                                 </td>
 
                                 <td className="py-2 px-2 text-center bg-teal-50/20">
-                                  <input
-                                    type="number"
-                                    step="any"
+                                  <StepperInput
                                     value={inputVal}
-                                    onChange={(e) =>
-                                      handleHardValueChange(meta.key, currentStage, e.target.value)
-                                    }
-                                    placeholder="--"
-                                    className={`w-full max-w-[90px] px-2 py-1 text-center font-mono rounded-lg border text-xs sm:text-sm transition-all focus:outline-hidden ${getHardInputClass(
-                                      meta.key,
-                                      currentStage
-                                    )}`}
+                                    onChange={(v) => handleHardValueChange(meta.key, currentStage, v === '' ? '' : String(v))}
+                                    min={meta.getNormalRange(selectedGender).minNormal - 10}
+                                    max={meta.getNormalRange(selectedGender).maxNormal + 10}
+                                    step={0.1}
+                                    unit={meta.unit}
+                                    validationClass={getHardInputClass(meta.key, currentStage)}
                                   />
                                 </td>
 
@@ -1287,18 +1286,14 @@ export const CogsAnalysis: React.FC<CogsAnalysisProps> = ({
                                 </td>
 
                                 <td className="py-2 px-2 text-center bg-teal-50/20">
-                                  <input
-                                    type="number"
-                                    step="any"
+                                  <StepperInput
                                     value={inputVal}
-                                    onChange={(e) =>
-                                      handleSoftValueChange(meta.key, currentStage, e.target.value)
-                                    }
-                                    placeholder="--"
-                                    className={`w-full max-w-[90px] px-2 py-1 text-center font-mono rounded-lg border text-xs sm:text-sm transition-all focus:outline-hidden ${getSoftInputClass(
-                                      meta.key,
-                                      currentStage
-                                    )}`}
+                                    onChange={(v) => handleSoftValueChange(meta.key, currentStage, v === '' ? '' : String(v))}
+                                    min={meta.getNormalRange().minNormal - 10}
+                                    max={meta.getNormalRange().maxNormal + 10}
+                                    step={0.1}
+                                    unit={meta.unit}
+                                    validationClass={getSoftInputClass(meta.key, currentStage)}
                                   />
                                 </td>
 

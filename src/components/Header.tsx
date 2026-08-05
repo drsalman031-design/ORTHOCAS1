@@ -152,21 +152,8 @@ export const Header: React.FC<HeaderProps> = ({
 
 
           </div>
-        </div>
-      </div>
-
-      {/* SLIM SUB-HEADER STRIP (Height: 20px) */}
-      <div className="w-full bg-slate-100 text-slate-700 h-[20px] flex items-center border-b border-slate-200/80">
-        <div className="w-full max-w-md mx-auto px-3 flex items-center justify-between text-[10px] font-medium min-w-0">
-          <span className="truncate max-w-[220px] sm:max-w-none text-slate-700 font-medium leading-none">
-            {subHeaderText}
-          </span>
-          <span className="inline-flex items-center gap-1 text-[9px] font-semibold text-slate-600 bg-white px-1.5 py-0.2 rounded-full border border-slate-200/80 shrink-0 shadow-2xs leading-none">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span>Sync: Updated</span>
-          </span>
-        </div>
-      </div>
-    </header>
+</div>
+       </div>
+     </header>
   );
 };

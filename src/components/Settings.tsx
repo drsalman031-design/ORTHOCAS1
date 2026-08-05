@@ -170,7 +170,7 @@ export const Settings: React.FC<SettingsProps> = ({
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-3.5 pb-20 font-sans box-border min-w-0">
+    <div className="w-full max-w-md mx-auto space-y-3.5 pb-20 font-sans box-border min-w-0">
       {savedSuccess && (
         <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 p-2.5 rounded-xl flex items-center gap-2 font-bold text-xs shadow-xs">
           <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />

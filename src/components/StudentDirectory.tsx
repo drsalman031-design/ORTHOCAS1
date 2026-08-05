@@ -200,7 +200,7 @@ export const StudentDirectory: React.FC<StudentDirectoryProps> = ({ patients }) 
   });
 
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-5 pb-10 font-sans box-border min-w-0">
+    <div className="w-full max-w-md mx-auto space-y-5 pb-10 font-sans box-border min-w-0">
       {/* HERO SECTION CARD */}
       <section className="relative overflow-hidden bg-[#00317e] text-white rounded-2xl p-5 sm:p-6 shadow-sm">
         <div className="relative z-10 flex items-start justify-between gap-4">

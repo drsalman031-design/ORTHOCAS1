@@ -69,7 +69,7 @@ export const AnalyticsDashboard: React.FC = () => {
   ];
 
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-5 pb-10 font-sans box-border min-w-0">
+    <div className="w-full max-w-md mx-auto space-y-5 pb-10 font-sans box-border min-w-0">
       {/* SUB-HEADER & LIVE SYNC INDICATOR */}
       <div className="flex flex-wrap justify-between items-center gap-2">
         <div className="flex items-center gap-2 text-slate-500">

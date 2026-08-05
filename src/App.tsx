@@ -161,7 +161,7 @@ export default function App() {
         if (storedProfile && storedProfile.studentName) {
           setProfile((prev) => ({
             ...storedProfile,
-            studentName: currentUser.role === 'STUDENT' ? currentUser.name : storedProfile.studentName,
+            studentName: currentUser.role === 'STUDENT' ? currentUser.name : (currentUser.role === 'STAFF_GUIDE' || currentUser.role === 'HOD' ? currentUser.name : storedProfile.studentName),
           }));
         }
       } catch (err) {

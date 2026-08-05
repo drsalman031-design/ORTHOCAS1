@@ -18,6 +18,7 @@ import {
   ChevronDown,
   ChevronUp,
 } from 'lucide-react';
+import { StepperInput } from './StepperInput';
 
 export interface ParameterMeta {
   key: DownsParameterKey;
@@ -498,15 +499,14 @@ export const DownsAnalysis: React.FC<DownsAnalysisProps> = ({
                   </span>
                 </p>
               </div>
-              <input
-                type="number"
-                step="0.1"
+              <StepperInput
                 value={currentVal}
-                onChange={(e) => handleInputChange(meta.key, currentStage, e.target.value)}
-                onWheel={(e) => handleInputWheel(e, meta.key, currentStage)}
-                placeholder="Val"
-                aria-label={`${meta.label} ${stageDisplayLabel}`}
-                className={`w-[4.75rem] shrink-0 text-center py-2 px-1.5 border rounded-lg text-sm font-semibold ${validation.className}`}
+                onChange={(v) => handleInputChange(meta.key, currentStage, v === '' ? '' : String(v))}
+                min={meta.minNormal - 20}
+                max={meta.maxNormal + 20}
+                step={0.1}
+                unit={meta.unit}
+                validationClass={validation.className}
               />
             </div>
             <div>{renderInference(activeInference)}</div>
@@ -534,14 +534,14 @@ export const DownsAnalysis: React.FC<DownsAnalysisProps> = ({
             {meta.normalText}
           </td>
           <td className="py-2 px-2 text-center">
-            <input
-              type="number"
-              step="0.1"
+            <StepperInput
               value={currentVal}
-              onChange={(e) => handleInputChange(meta.key, currentStage, e.target.value)}
-              onWheel={(e) => handleInputWheel(e, meta.key, currentStage)}
-              placeholder="Val"
-              className={`w-full text-center py-1 px-2 border rounded-lg text-xs sm:text-sm transition-colors font-semibold ${validation.className}`}
+              onChange={(v) => handleInputChange(meta.key, currentStage, v === '' ? '' : String(v))}
+              min={meta.minNormal - 20}
+              max={meta.maxNormal + 20}
+              step={0.1}
+              unit={meta.unit}
+              validationClass={validation.className}
             />
           </td>
           <td className="py-2.5 px-3">{renderInference(activeInference)}</td>

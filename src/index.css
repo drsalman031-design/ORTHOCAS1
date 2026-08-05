@@ -127,29 +127,7 @@ body {
   padding-right: var(--safe-right);
 }
 
-@media (min-width: 640px) and (display-mode: browser) {
-  .app-frame {
-    min-height: var(--app-height);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1.25rem;
-    background:
-      radial-gradient(ellipse at 20% 10%, rgba(45, 212, 191, 0.12), transparent 45%),
-      radial-gradient(ellipse at 80% 90%, rgba(15, 23, 42, 0.9), transparent 50%),
-      #020617;
-  }
 
-  .app-shell {
-    max-width: var(--app-max-width);
-    height: min(844px, calc(var(--app-height) - 2.5rem));
-    border-radius: 2rem;
-    border: 1px solid rgb(51 65 85);
-    box-shadow:
-      0 0 0 1px rgb(15 23 42),
-      0 25px 50px -12px rgb(0 0 0 / 0.55);
-  }
-}
 
 .app-header {
   padding-top: max(0.35rem, var(--safe-top));
@@ -216,7 +194,7 @@ body {
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: contain;
   padding: 0.75rem;
-  padding-bottom: 1rem;
+  padding-bottom: 5.5rem;
   scrollbar-width: none;
 }
 
@@ -230,12 +208,19 @@ body {
 }
 
 .case-form-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   flex-shrink: 0;
-  z-index: 25;
+  z-index: 50;
   padding: 0.625rem 0.875rem;
   background: var(--bg-card);
   border-top: 1px solid var(--border-color);
   box-shadow: 0 -4px 12px rgba(15, 23, 42, 0.06);
+  padding-left: calc(0.875rem + var(--safe-left));
+  padding-right: calc(0.875rem + var(--safe-right));
+  max-width: 100%;
 }
 
 .app-main--faculty {

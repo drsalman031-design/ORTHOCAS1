@@ -28,6 +28,7 @@ import {
   CogsSoftTissueAnalysisData,
   CephDiscrepancyAnalysisData,
 } from '../../types';
+import { StepperInput } from './StepperInput';
 import { MasterCephDiagnosisEngine } from './MasterCephDiagnosisEngine';
 
 export type AnalysisStage = 'preRx' | 'pGrMod' | 'preIII' | 'postRx' | 'retention' | 'change';
@@ -421,14 +422,15 @@ const CephFieldCard: React.FC<CephFieldCardProps> = ({
           )}
         </div>
         <div className="shrink-0 w-24">
-          <input
-            type="number"
-            step="any"
-            placeholder={placeholder}
+          <StepperInput
             value={value ?? ''}
+            onChange={(v) => onChange(v === '' ? '' : String(v))}
+            min={-20}
+            max={100}
+            step={0.1}
+            unit={unit}
+            validationClass={inputBorderClass}
             disabled={disabled}
-            onChange={(e) => onChange(e.target.value)}
-            className={`w-full min-h-[44px] px-2.5 py-1.5 bg-white border rounded-lg text-xs font-bold text-slate-900 text-right focus:outline-none focus:ring-2 transition-all ${inputBorderClass}`}
           />
         </div>
       </div>

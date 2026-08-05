@@ -80,7 +80,7 @@ export const PatientList: React.FC<PatientListProps> = ({
     .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
 
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-5 pb-8 font-sans box-border min-w-0">
+    <div className="w-full max-w-md mx-auto space-y-5 pb-8 font-sans box-border min-w-0">
       {/* HEADER & ACTIVE BADGE */}
       <div className="flex justify-between items-center gap-2 min-w-0">
         <div>

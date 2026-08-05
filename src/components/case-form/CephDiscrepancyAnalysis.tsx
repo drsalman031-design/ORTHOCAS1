@@ -22,6 +22,7 @@ import {
   Target,
   ShieldAlert,
 } from 'lucide-react';
+import { StepperInput } from './StepperInput';
 
 export interface CephDiscrepancyParameterMeta {
   key: CephDiscrepancyParameterKey;
@@ -782,13 +783,14 @@ export const CephDiscrepancyAnalysis: React.FC<CephDiscrepancyAnalysisProps> = (
                   </span>
                 </p>
               </div>
-              <input
-                type="number"
-                step="any"
+              <StepperInput
                 value={inputVal}
-                onChange={(e) => handleValueChange(meta.key, currentStage, e.target.value)}
-                placeholder="--"
-                className={`w-20 shrink-0 text-center py-1.5 px-1.5 border rounded-lg text-xs font-bold font-mono ${getInputClass(meta.key, currentStage)}`}
+                onChange={(v) => handleValueChange(meta.key, currentStage, v === '' ? '' : String(v))}
+                min={meta.getNormalRange(selectedGender).minNormal - 10}
+                max={meta.getNormalRange(selectedGender).maxNormal + 10}
+                step={0.1}
+                unit={meta.unit}
+                validationClass={getInputClass(meta.key, currentStage)}
               />
             </div>
             <div className="whitespace-normal break-words">
@@ -980,18 +982,14 @@ export const CephDiscrepancyAnalysis: React.FC<CephDiscrepancyAnalysisProps> = (
                               </td>
 
                               <td className="py-2 px-2 text-center bg-indigo-50/20">
-                                <input
-                                  type="number"
-                                  step="any"
+                                <StepperInput
                                   value={inputVal}
-                                  onChange={(e) =>
-                                    handleValueChange(meta.key, currentStage, e.target.value)
-                                  }
-                                  placeholder="--"
-                                  className={`w-full max-w-[90px] px-2 py-1 text-center font-mono rounded-lg border text-xs sm:text-sm transition-all focus:outline-hidden ${getInputClass(
-                                    meta.key,
-                                    currentStage
-                                  )}`}
+                                  onChange={(v) => handleValueChange(meta.key, currentStage, v === '' ? '' : String(v))}
+                                  min={meta.getNormalRange(selectedGender).minNormal - 10}
+                                  max={meta.getNormalRange(selectedGender).maxNormal + 10}
+                                  step={0.1}
+                                  unit={meta.unit}
+                                  validationClass={getInputClass(meta.key, currentStage)}
                                 />
                               </td>
 
