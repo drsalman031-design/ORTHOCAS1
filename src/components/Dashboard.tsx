@@ -30,7 +30,7 @@ import {
   GraduationCap,
 } from 'lucide-react';
 import { PatientRecord, StudentProfile, ActiveTab } from '../types';
-import { getCurrentUserAccount } from '../lib/authContext';
+import { getCurrentUserAccount, PRESET_ACCOUNTS } from '../lib/authContext';
 import { prefetchCaseForm, prefetchPatientList } from '../lib/prefetch';
 
 interface DashboardProps {
@@ -68,6 +68,14 @@ export const Dashboard: React.FC<DashboardProps> = ({
     const status = p.approvalStatus?.toUpperCase() || '';
     return status.includes('PENDING_HOD');
   });
+
+  // Active PG Residents count (filtered by role)
+  const studentAccounts = PRESET_ACCOUNTS.filter((a) => a.role === 'STUDENT');
+  const activeResidents = isHOD
+    ? studentAccounts.length
+    : isFaculty
+    ? studentAccounts.filter((s) => currentUser.assignedStudentIds?.includes(s.id)).length
+    : studentAccounts.filter((s) => s.id === currentUser.id).length;
 
   const [activityFeed] = useState([
     {
@@ -422,7 +430,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             </div>
           </div>
           <div className="mt-3 flex items-baseline gap-1.5">
-            <span className="text-[30px] font-bold leading-none text-slate-900">18</span>
+            <span className="text-[30px] font-bold leading-none text-slate-900">{activeResidents}</span>
             <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">
               100% Enrolled
             </span>

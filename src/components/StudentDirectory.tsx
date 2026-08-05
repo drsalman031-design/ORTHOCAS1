@@ -20,6 +20,7 @@ import {
   Check,
 } from 'lucide-react';
 import { PatientRecord } from '../types';
+import { getCurrentUserAccount } from '../lib/authContext';
 
 interface Resident {
   id: string;
@@ -121,10 +122,18 @@ const INITIAL_RESIDENTS: Resident[] = [
 ];
 
 export const StudentDirectory: React.FC<StudentDirectoryProps> = ({ patients }) => {
+  const currentUser = getCurrentUserAccount();
+  const isStaff = currentUser.role === 'STAFF_GUIDE';
+
   const [residents, setResidents] = useState<Resident[]>(() => {
     const saved = localStorage.getItem('orthocase_residents');
     return saved ? JSON.parse(saved) : INITIAL_RESIDENTS;
   });
+
+  // Filter residents by guide for STAFF_GUIDE
+  const visibleResidents = isStaff
+    ? residents.filter((r) => r.guide === currentUser.name)
+    : residents;
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedBatch, setSelectedBatch] = useState<string>('ALL');
@@ -136,7 +145,7 @@ export const StudentDirectory: React.FC<StudentDirectoryProps> = ({ patients }) 
     name: '',
     yearBatch: 'Year 1' as 'Year 1' | 'Year 2' | 'Year 3',
     rollNumber: '',
-    guide: '',
+    guide: isStaff ? currentUser.name : '',
     email: '',
     phone: '',
   });
@@ -158,7 +167,7 @@ export const StudentDirectory: React.FC<StudentDirectoryProps> = ({ patients }) 
       year: yearString,
       yearBatch: newResident.yearBatch,
       rollNumber: newResident.rollNumber,
-      guide: newResident.guide || 'Dr. Sunita Patil',
+      guide: newResident.guide || (isStaff ? currentUser.name : 'Dr. Sunita Patil'),
       email: newResident.email || `${newResident.name.toLowerCase().replace(/[^a-z]/g, '')}@institution.edu`,
       phone: newResident.phone || '+91 98765 00000',
       status: 'On Schedule',
@@ -186,7 +195,7 @@ export const StudentDirectory: React.FC<StudentDirectoryProps> = ({ patients }) 
     setIsAddModalOpen(false);
   };
 
-  const filteredStudents = residents.filter((s) => {
+  const filteredStudents = visibleResidents.filter((s) => {
     const matchesSearch =
       s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       s.rollNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
