@@ -1400,8 +1400,9 @@ export const CaseForm: React.FC<CaseFormProps> = ({ initialPatient, onSavePatien
         </Suspense>
       </form>
       </div>
+    </div>
 
-      {/* Pinned Bottom Navigation */}
+      {/* Pinned Bottom Navigation - outside case-form-shell to avoid overflow:hidden clipping fixed position */}
       <div className="case-form-footer shrink-0 z-20 bg-white border-t border-slate-200/90 px-3.5 py-2.5 shadow-lg">
         <div className="flex items-center justify-between gap-3 max-w-2xl mx-auto">
           <button
